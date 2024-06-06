@@ -12,11 +12,11 @@ export const load: PageServerLoad = async () => ({
 export const actions = {
 	default: async ({ request }) => {
 		const form = await superValidate(request, zod(insertPlantSchema));
+		console.log(form.data);
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
-
 		await db.insert(plants).values(form.data);
 
 		return message(form, 'Plant created successfully!');
